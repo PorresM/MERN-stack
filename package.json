@@ -1,0 +1,36 @@
+{
+    "name": "mern-stack",
+    "version": "0.0.1",
+    "description": "Learning MERN stack",
+    "main": "start.js",
+    "scripts": {
+        "start": "node start.js",
+        "server": "nodemon start.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/PorresM/MERN-stack.git"
+    },
+    "author": "Martin Porrès",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/PorresM/MERN-stack/issues"
+    },
+    "homepage": "https://github.com/PorresM/MERN-stack#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4",
+        "jsonwebtoken": "^8.5.0",
+        "mongoose": "^5.4.19",
+        "passport": "^0.4.0",
+        "passport-jwt": "^4.0.0",
+        "validator": "^10.11.0"
+    },
+    "devDependencies": {
+        "babel-preset-env": "^1.7.0",
+        "babel-register": "^6.26.0",
+        "nodemon": "^1.18.10"
+    }
+}
