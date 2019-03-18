@@ -1,11 +1,16 @@
 import gravatar from 'gravatar';
 import bcrypt from 'bcryptjs';
 import ApiError from '@/utils/apiError';
+import { config } from 'config/config';
 
 // Load User model
 const User = require('@/api/users/userModel');
 
 export class UserService {
+    constructor(jwtService) {
+        this.jwtService = jwtService;
+    }
+
     /**
      * @desc    Create a user in db
      */
@@ -30,7 +35,8 @@ export class UserService {
                         password: userRequest.password
                     });
 
-                    bcrypt.genSalt(10, (err, salt) => {
+                    // TODO: move it to a bcryptService
+                    bcrypt.genSalt(config.bcrypt.salt, (err, salt) => {
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
                             if (err) {
                                 console.log(err);
@@ -58,6 +64,41 @@ export class UserService {
                                     });
                             }
                         });
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * @desc    Login a user
+     */
+    login(email, password) {
+        return new Promise((resolve, reject) => {
+            User.findOne({ email }).then(user => {
+                // Check for user
+                if (!user) {
+                    reject(new ApiError(401, { msg: 'Invalid credentials' }));
+                } else {
+                    // Check Password
+                    bcrypt.compare(password, user.password).then(isMatch => {
+                        if (isMatch) {
+                            // User Match
+                            this.jwtService
+                                .createToken(user)
+                                .then(token => {
+                                    resolve(token);
+                                })
+                                .catch(err => {
+                                    reject(err);
+                                });
+                        } else {
+                            reject(
+                                new ApiError(401, {
+                                    msg: 'Invalid credentials'
+                                })
+                            );
+                        }
                     });
                 }
             });
