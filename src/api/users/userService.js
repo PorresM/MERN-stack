@@ -1,9 +1,9 @@
 import gravatar from 'gravatar';
 import bcrypt from 'bcryptjs';
-import ApiError from '../../utils/apiError';
+import ApiError from '@/utils/apiError';
 
 // Load User model
-const User = require('./userModel');
+const User = require('@/api/users/userModel');
 
 export class UserService {
     /**

@@ -2,9 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
-const userController = require('./src/api/users/userController');
-const profiles = require('./src/api/profiles');
-const posts = require('./src/api/posts');
+const userController = require('@/api/users/userController');
+const profileController = require('@/api/profiles/profileController');
+const postController = require('@/api/posts/postController');
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // DB Config
-import { mongoURI as db } from './config/keys';
+import { mongoURI as db } from 'config/keys';
 
 // Connect to MongoDB
 mongoose
@@ -25,8 +25,8 @@ app.get('/', (req, res) => res.send('Hello'));
 
 // Use routes
 app.use('/api/users', userController);
-app.use('/api/profiles', profiles);
-app.use('/api/posts', posts);
+app.use('/api/profiles', profileController);
+app.use('/api/posts', postController);
 
 const port = process.env.port || 5000;
 
